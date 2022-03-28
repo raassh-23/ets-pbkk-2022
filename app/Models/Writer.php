@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Writer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address',
+        'phone',
+        'email',
+    ];
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
+    }
 }
