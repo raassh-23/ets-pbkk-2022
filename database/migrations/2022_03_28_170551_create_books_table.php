@@ -22,6 +22,8 @@ class CreateBooksTable extends Migration
             $table->string('cover_image');
             $table->string('isbn');
             $table->timestamps();
+            $table->foreignId('publisher_id')->constrained('publishers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
