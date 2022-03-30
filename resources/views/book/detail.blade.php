@@ -15,5 +15,13 @@
         <p>Year: {{ $book->publish_year }}</p>
         <p>Edition: {{ $book->edition }}</p>
         <p>ISBN: {{ $book->isbn }}</p>
+
+        <h2>Review</h2>
+        @foreach ($book->reviews as $review)
+            <a href="{{ url('/user/'.$review->user->id) }}">{{$review->user->name}}</a>
+            <p>Rating: {{ $review->rating }}</p>
+            <p>{{ $review->review }}</p>
+            
+        @endforeach
     </div>
 @endsection
