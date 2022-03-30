@@ -48,7 +48,9 @@ class PublisherController extends Controller
      */
     public function show(Publisher $publisher)
     {
-        //
+        $publisher = Publisher::findorfail($publisher->id);
+
+        return view('publisher.detail', compact('publisher'));
     }
 
     /**
