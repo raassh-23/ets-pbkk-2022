@@ -41,11 +41,10 @@ class ReviewController extends Controller
             'review' => 'required|string'
         ]);
 
-        $userId = Auth::user()->id;
         $review = Review::create([
             'rating' => $request->rating,
             'review' =>  $request->review,
-            'user_id' => $userId,
+            'user_id' => $request->user()->id,
             'book_id' => $request->book_id
         ]);
 

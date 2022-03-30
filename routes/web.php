@@ -25,13 +25,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('book', BookController::class)->except('index');
+Route::middleware('auth')->group(function () {
+    Route::resource('book', BookController::class)->except('index');
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
-Route::resource('writer', WriterController::class);
+    Route::resource('writer', WriterController::class);
 
-Route::resource('publisher', PublisherController::class);
+    Route::resource('publisher', PublisherController::class);
 
-Route::resource('review', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
-
+    Route::resource('review', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
+});
