@@ -14,7 +14,8 @@ class WriterController extends Controller
      */
     public function index()
     {
-        //
+        $writers = Writer::all();
+        return view('writer.index', compact('writers'));
     }
 
     /**
@@ -46,7 +47,8 @@ class WriterController extends Controller
      */
     public function show(Writer $writer)
     {
-        //
+        $writer = Writer::findOrFail($writer->id);
+        return view('writer.detail', compact('writer'));
     }
 
     /**

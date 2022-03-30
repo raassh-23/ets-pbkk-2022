@@ -2,9 +2,16 @@
 
 @section('content')
     <div class="container">
-        <h1>Books</h1>
+        <h1>Writer Detail</h1>
+        
+        <h2>{{ $writer->name }}</h2>
+        <p>Address: {{ $writer->address }}</p>
+        <p>Phone: {{ $writer->phone }}</p>
+        <p>Email: {{ $writer->email }}</p>
+
+        <h2>Books</h2>
         <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
-            @foreach ($books as $book)
+            @foreach ($writer->books as $book)
                 <div class="col">
                     <div class="card h-100">
                         <img class="card-img-top" src="{{ $book->cover_image }}" alt="image" style="width:100%">

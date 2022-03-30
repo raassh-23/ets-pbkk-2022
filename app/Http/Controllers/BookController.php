@@ -8,16 +8,6 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -46,7 +36,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        $book = Book::findOrFail($book->id);
+        return view('book.detail', compact('book'));
     }
 
     /**
