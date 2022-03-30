@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
+use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +29,6 @@ Route::resource('book', BookController::class)->except('index');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
 Route::resource('writer', WriterController::class);
+
+Route::resource('publisher', PublisherController::class);
+

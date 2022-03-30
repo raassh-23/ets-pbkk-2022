@@ -35,7 +35,13 @@
                     <ul class="navbar-nav me-auto">
                         <a class="nav-link" href="{{ url('/writer') }}">Writer</a>
                     </ul>
-
+                    <ul class="navbar-nav me-auto">
+                        <a class="nav-link" href="{{ url('/publisher') }}">Publisher</a>
+                    </ul>
+                    <ul class="navbar-nav me-auto">
+                        <a class="nav-link" href="{{ url('/books') }}">Book</a>
+                    </ul>
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->

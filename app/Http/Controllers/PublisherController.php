@@ -14,7 +14,9 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        //
+        $publishers = Publisher::all();
+
+        return view('publisher.index', compact('publishers'));
     }
 
     /**
