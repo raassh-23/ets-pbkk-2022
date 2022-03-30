@@ -85,5 +85,9 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/bootstrap.js')}}"></script>
 </body>
+
 </html>

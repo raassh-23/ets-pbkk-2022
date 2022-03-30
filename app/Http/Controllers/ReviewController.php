@@ -51,11 +51,11 @@ class ReviewController extends Controller
 
         if ( $review ) {
             return redirect()->back()->with([
-                'msg' => 'Review berhasil ditambahkan',
+                'success' => 'Review berhasil ditambahkan',
             ]);
         }
         return redirect()->back()->with([
-            'msg' => 'Review tidak berhasil ditambahkan',
+            'error' => 'Review tidak berhasil ditambahkan',
         ]);
     }
 
@@ -90,7 +90,21 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        //
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:10',
+            'review' => 'required|string'
+        ]);
+
+        $review->update([
+            'rating' => $request->rating,
+            'review' =>  $request->review,
+        ]);
+
+        if ( $review ) {
+            return redirect()->back()->with([
+                'success' => 'Review berhasil diubah',
+            ]);
+        }
     }
 
     /**
@@ -104,7 +118,7 @@ class ReviewController extends Controller
         if ($review->user->id == Auth::user()->id) {
             $review->delete();
             return redirect()->back()->with([
-                'msg' => 'Review berhasil dihapus',
+                'success' => 'Review berhasil dihapus',
             ]);
         }
     }

@@ -28,8 +28,58 @@
                     @csrf
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
+
+                <form method='POST' action="{{ url('/review/' . $review->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" value="{{ $book->id }}" name="book_id">
+                    <div class="form-group">
+                        <label for="ratingInput">Rating</label>
+                        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
+                            placeholder="Enter rating" name="rating" value="{{$review->rating}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewInput">Review</label>
+                        <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" 
+                            name="review" value="{{$review->review}}">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+                {{-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#{{$review->id}}">Edit</button> --}}
+                
+                {{-- <div class="modal" tabindex="-1" role="dialog" id="{{$review->id}}">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit review</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
             @endif
         @endforeach
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-error">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <form method='POST' action="/review">
             @csrf
@@ -58,4 +108,5 @@
             </div>
         @endif
     </div>
+
 @endsection
