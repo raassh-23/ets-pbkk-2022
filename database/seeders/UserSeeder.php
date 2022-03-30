@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
             'role' => 1,
         ]);
 
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@mail.com',
+            'role' => 0,
+        ]);
+
         User::factory()->count(5)->create();
     }
 }
