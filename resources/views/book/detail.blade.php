@@ -22,6 +22,13 @@
             <a href="{{ url('/user/' . $review->user->id) }}">{{ $review->user->name }}</a>
             <p>Rating: {{ $review->rating }}</p>
             <p>{{ $review->review }}</p>
+            @if ($review->user->id == Auth::user()->id)
+                <form action="{{ url('/review/' . $review->id) }}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endif
         @endforeach
 
         <form method='POST' action="/review">

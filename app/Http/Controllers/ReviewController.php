@@ -101,6 +101,11 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        if ($review->user->id == Auth::user()->id) {
+            $review->delete();
+            return redirect()->back()->with([
+                'msg' => 'Review berhasil dihapus',
+            ]);
+        }
     }
 }
