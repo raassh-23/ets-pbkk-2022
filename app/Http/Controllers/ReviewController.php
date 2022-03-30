@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -35,7 +36,27 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:10',
+            'review' => 'required|string'
+        ]);
+
+        $userId = Auth::user()->id;
+        $review = Review::create([
+            'rating' => $request->rating,
+            'review' =>  $request->review,
+            'user_id' => $userId,
+            'book_id' => $request->book_id
+        ]);
+
+        if ( $review ) {
+            return redirect()->back()->with([
+                'msg' => 'Review berhasil ditambahkan',
+            ]);
+        }
+        return redirect()->back()->with([
+            'msg' => 'Review tidak berhasil ditambahkan',
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Publisher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -31,4 +32,6 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::resource('writer', WriterController::class);
 
 Route::resource('publisher', PublisherController::class);
+
+Route::resource('review', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
 
