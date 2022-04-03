@@ -26,9 +26,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-
     Route::resource('books', BookController::class)->only(['index', 'show']);
 
     Route::resource('writers', WriterController::class)->only(['index', 'show']);
@@ -40,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
 
     Route::middleware('isAdmin')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
         Route::resource('books', BookController::class)->except(['index', 'show']);
 
         Route::resource('writers', WriterController::class)->except(['index', 'show']);
