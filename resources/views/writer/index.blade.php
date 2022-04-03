@@ -6,14 +6,12 @@
         <div class="d-flex">
             <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
                 @foreach ($writers as $writer)
-                    <div class="col">
+                    <div class="col position-relative">
                         <div class="card h-100">
+                            <img class="card-image-top" src="{{ $writer->image_url }}" alt="{{ $writer->name }}" style="width:100%">
                             <div class="card-body d-flex flex-column justify-content-between">
-                                <img src="{{ $writer->image_url }}" alt="{{ $writer->name }}'s image" width="250px" height="330px">
-                                <div>
-                                    <h4 class="card-title">{{ $writer->name }}</h4>
-                                </div>
-                                <a href="{{ route('writers.show', ['writer' => $writer->id]) }}" class="btn btn-primary mt-2">Details</a>
+                                <a class="card-title fw-bold fs-5 stretched-link text-black text-decoration-none m-0" href="{{ route('writers.show', ['writer' => $writer->id]) }}">{{  Str::limit($writer->name, 30, '...') }}</a>
+                                <p class="m-0">{{ count($writer->books)}} books</p>
                             </div>
                         </div>
                     </div>
