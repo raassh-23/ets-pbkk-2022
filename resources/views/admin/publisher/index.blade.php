@@ -5,6 +5,27 @@
         <h1>Manage Publishers</h1>
         <a href="{{ route('admin.publishers.create') }}" class="btn btn-primary">Add Publisher</a>
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-error">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <table>
             <thead>
@@ -17,22 +38,22 @@
             </thead>
             <tbody>
                 @foreach ($publishers as $publisher)
-                <tr>
-                    <td>{{ $publisher->name }}</td>
-                    <td>{{ $publisher->email }}</td>
-                    <td>{{ $publisher->address }}</td>
-                    <td>{{ $publisher->phone }}</td>
-                    <td>{{ count($publisher->books) }}</td>
-                    <td>
-                        <a href="{{ route('admin.publishers.edit', $publisher->id) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ route('publishers.show', $publisher->id) }}" class="btn btn-primary">Details</a>
-                        <form action="{{ route('admin.publishers.destroy', $publisher->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                <tr>
+                    <tr>
+                        <td>{{ $publisher->name }}</td>
+                        <td>{{ $publisher->email }}</td>
+                        <td>{{ $publisher->address }}</td>
+                        <td>{{ $publisher->phone }}</td>
+                        <td>{{ count($publisher->books) }}</td>
+                        <td>
+                            <a href="{{ route('admin.publishers.edit', $publisher->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('publishers.show', $publisher->id) }}" class="btn btn-primary">Details</a>
+                            <form action="{{ route('admin.publishers.destroy', $publisher->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    <tr>
                 @endforeach
             </tbody>
         </table>

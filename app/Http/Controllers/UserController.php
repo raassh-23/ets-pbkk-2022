@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -38,7 +39,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if ($request->user()->id == $user->id) {
+            return redirect()->back()->with([
+                'error' => 'You can\'t demote yourself.',
+            ]);
+        }
+
+        $user->update([
+            'role' => $user->role == 0 ? 1 : 0,
+        ]);
+
+        return redirect()->back()->with([
+            'success' => 'User role updated.',
+        ]);
     }
 
     /**
@@ -49,6 +62,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (Auth::user()->id == $user->id) {
+            return redirect()->back()->with([
+                'error' => 'You can\'t delete yourself.',
+            ]);
+        }
+
         $user->delete();
 
         return redirect()->back()->with([
