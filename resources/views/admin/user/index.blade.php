@@ -52,7 +52,7 @@
                                 @method('PUT')
                             </form>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('{{'delete-form'.$user->id}}').submit();">Delete</a>
+                            if(confirm('Are you sure?')) document.getElementById('{{'delete-form'.$user->id}}').submit();">Delete</a>
                             <form action="{{ route('admin.users.destroy', $user->id) }}" id="{{'delete-form'.$user->id}}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')

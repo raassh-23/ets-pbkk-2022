@@ -50,7 +50,7 @@
                             <a href="{{ route('writers.show', $writer->id) }}" class="btn btn-primary">Details</a>
                             <a href="{{ route('admin.writers.edit', $writer->id) }}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('{{ 'delete-form'.$writer->id }}').submit();">Delete</a>
+                            if(confirm('Are you sure?')) document.getElementById('{{ 'delete-form'.$writer->id }}').submit();">Delete</a>
                             <form action="{{ route('admin.writers.destroy', $writer->id) }}" id="{{ 'delete-form'.$writer->id }}" method="POST" class="d-none">
                                 @csrf
                                 @method('DELETE')

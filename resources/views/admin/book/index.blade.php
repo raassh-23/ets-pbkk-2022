@@ -62,7 +62,7 @@
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">Details</a>
                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-warning">Edit</a>
                         <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                        document.getElementById('{{ 'delete-form'.$book->id }}').submit();">Delete</a>
+                        if(confirm('Are you sure?')) document.getElementById('{{ 'delete-form'.$book->id }}').submit();">Delete</a>
                         <form action="{{ route('admin.books.destroy', $book->id) }}" id="{{ 'delete-form'.$book->id }}" class="d-none" method="POST">
                             @csrf
                             @method('DELETE')

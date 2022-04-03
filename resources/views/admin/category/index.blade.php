@@ -45,7 +45,7 @@
                         <td>
                             <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('{{ 'delete-form'.$category->id }}').submit();">Delete</a>
+                            if(confirm('Are you sure?')) document.getElementById('{{ 'delete-form'.$category->id }}').submit();">Delete</a>
                             <form action="{{ route('admin.categories.destroy', $category->id) }}" id="{{ 'delete-form'.$category->id }}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')

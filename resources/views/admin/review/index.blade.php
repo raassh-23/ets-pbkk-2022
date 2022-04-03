@@ -45,7 +45,7 @@
                         <td>{{ $review->review }}</td>
                         <td>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('{{ 'delete-form'.$review->id }}').submit();">Delete</a>
+                            if(confirm('Are you sure?')) document.getElementById('{{ 'delete-form'.$review->id }}').submit();">Delete</a>
                             <form action="{{ route('admin.reviews.destroy', $review->id) }}" id="{{ 'delete-form'.$review->id }}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')

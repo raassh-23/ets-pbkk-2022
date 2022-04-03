@@ -54,7 +54,7 @@
                             <a href="{{ route('publishers.show', $publisher->id) }}" class="btn btn-primary">Details</a>
                             <a href="{{ route('admin.publishers.edit', $publisher->id) }}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('{{ 'delete-form'.$publisher->id }}').submit();">Delete</a>
+                            if(confirm('Are you sure?')) document.getElementById('{{ 'delete-form'.$publisher->id }}').submit();">Delete</a>
                             <form action="{{ route('admin.publishers.destroy', $publisher->id) }}" id="{{ 'delete-form'.$publisher->id }}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')

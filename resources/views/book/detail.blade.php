@@ -32,7 +32,8 @@
                     <p class="my-0">{{ $user_review->review }}</p>
 
                     <div class="d-flex flex-row mt-3">
-                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $user_review->id]) }}" method="POST">
+                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $user_review->id]) }}" method="POST"
+                            onsubmit="return confirm('Are you sure?');">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -63,8 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewInput">Review</label>
-                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" 
-                                name="review" value="{{$user_review->review}}">
+                            <textarea class="form-control" id="reviewInputID" rows="3" name="review" placeholder="Enter review" required>{{$user_review->review}}</textarea>
                         </div>
                         <div class="d-flex flex-row mt-3">
                             <a class="btn btn-light" 
@@ -112,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewInput">Review</label>
-                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" name="review">
+                            <textarea class="form-control" id="reviewInputID" rows="3" name="review" placeholder="Enter review" required></textarea>
                         </div>
                         <div class="d-flex flex-row mt-3">
                             <a class="btn btn-light" 
