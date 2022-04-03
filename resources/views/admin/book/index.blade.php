@@ -2,8 +2,12 @@
 
 @section('content')
     <div class="container">
-        <h1>Manage Books</h1>
-        <a href="{{ route('admin.books.create') }}" class="btn btn-primary">Add Book</a>
+        <div class="d-flex justify-content-between">
+            <h1>Manage Book</h1>
+            <div>
+                <a href="{{ route('admin.writers.create') }}" class="btn btn-primary">Add Book</a>
+            </div>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -27,8 +31,9 @@
             </div>
         @endif
 
-        <table>
+        <table class="table">
             <thead>
+                <th>No</th>
                 <th>ISBN</th>
                 <th>Title</th>
                 <th>Category</th>
@@ -41,6 +46,7 @@
             <tbody>
                 @foreach ($books as $book)
                 <tr>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $book->isbn }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->category->name }}</td>
@@ -55,10 +61,11 @@
                     <td>
                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-primary">Edit</a>
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">Details</a>
-                        <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST">
+                        <a href="#" class="btn btn-danger" onclick="event.preventDefault();
+                        document.getElementById('delete-form').submit();">Delete</a>
+                        <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" id="delete-form" class="d-none">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 <tr>

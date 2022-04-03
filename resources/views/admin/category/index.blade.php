@@ -2,8 +2,12 @@
 
 @section('content')
     <div class="container">
-        <h1>Manage Categories</h1>
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Add Category</a>
+        <div class="d-flex justify-content-between">
+            <h1>Manage Category</h1>
+            <div>
+                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Add Category</a>
+            </div>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -27,7 +31,7 @@
             </div>
         @endif
 
-        <table>
+        <table class="table">
             <thead>
                 <th>Category Name</th>
                 <th># Books</th>
@@ -40,10 +44,11 @@
                         <td>{{ $category->books->count() }}</td>
                         <td>
                             <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="#" class="btn btn-danger" onclick="event.preventDefault();
+                            document.getElementById('delete-form').submit();">Delete</a>
                             <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     <tr>
