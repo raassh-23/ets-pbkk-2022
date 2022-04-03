@@ -14,17 +14,27 @@
         </div>
 
         <h2 class="mt-5">Books ({{ count($writer->books) ?: 0 }})</h2>
-        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-5 g-3">
             @foreach ($writer->books as $book)
-                <div class="col">
+                <div class="col position-relative">
                     <div class="card h-100">
-                        <img class="card-img-top" src="{{ $book->cover_image }}" alt="image" style="width:100%">
+                        <img class="card-image-top" src="{{ $book->cover_image }}" alt="image" style="width:100%">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div>
-                                <h4 class="card-title">{{ $book->title }}</h4>
-                                <p class="card-text">{{ Str::limit($book->synopsis, 200, '...') }}</p>
+                                <a class="card-title fw-bold fs-5 stretched-link text-black text-decoration-none m-0"
+                                    href="{{ route('books.show', ['book' => $book->id]) }}">{{ Str::limit($book->title, 30, '...') }}</a>
+                                <p class="m-0">
+                                    @foreach ($book->writers as $writer)
+                                        {{ $loop->last ? $writer->name : $writer->name . ',' }}
+                                    @endforeach
+                                </p>
                             </div>
-                            <a href="{{ route('books.show', ['book' => $book->id]) }}" class="btn btn-primary mt-2">Details</a>
+                            <div class="d-flex flex-row">
+                                <span style="color: Orange;">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <p class="ms-1 mb-0">{{ $book->rating ? round($book->rating, 2) : '-' }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
