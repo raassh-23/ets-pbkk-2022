@@ -18,7 +18,7 @@ class BookController extends Controller
         $search = $request->query('search') ?: '';
         $category = $request->query('category');
 
-        $books = Book::where('title', 'like', "%{$search}%");
+        $books = Book::whereRaw('LOWER(title) like ?', ['%'.strtolower($search).'%']);
 
         if ($category) {
             $books = $books->where('category_id', $category);
@@ -60,7 +60,6 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book = Book::findOrFail($book->id);
         return view('book.detail', compact('book'));
     }
 
@@ -96,5 +95,10 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         //
+    }
+
+    public function indexAdmin() 
+    {
+        // 
     }
 }

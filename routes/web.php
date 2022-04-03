@@ -38,17 +38,29 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
 
-    Route::prefix('admin')->middleware('isAdmin')->group(function () {
+    Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-        Route::resource('books', BookController::class)->except(['show'])->name('index', 'admin.books.index');
+        Route::get('/books', [BookController::class, 'indexAdmin'])->name('books.index');
 
-        Route::resource('writers', WriterController::class)->except(['show'])->name('index', 'admin.writers.index');
-    
-        Route::resource('publishers', PublisherController::class)->except(['show'])->name('index', 'admin.publishers.index');
-    
-        Route::resource('users', UserController::class)->except(['show'])->name('index', 'admin.users.index');
+        Route::resource('books', BookController::class)->except(['index', 'show']);
 
-        Route::resource('categories', CategoryController::class)->except(['show'])->name('index', 'admin.categories.index');
+        Route::get('/writers', [WriterController::class, 'indexAdmin'])->name('writers.index');
+
+        Route::resource('writers', WriterController::class)->except(['index', 'show']);
+
+        Route::get('/publishers', [PublisherController::class, 'indexAdmin'])->name('publishers.index');
+    
+        Route::resource('publishers', PublisherController::class)->except(['index', 'show']);
+
+        Route::get('/users', [UserController::class, 'indexAdmin'])->name('users.index');
+    
+        Route::resource('users', UserController::class)->except(['index', 'show']);
+    
+        Route::get('/categories', [CategoryController::class, 'indexAdmin'])->name('categories.index');
+
+        Route::resource('categories', CategoryController::class)->except(['index', 'show']);
+
+        Route::get('/reviews', [ReviewController::class, 'indexAdmin'])->name('reviews.index');
     });
 });

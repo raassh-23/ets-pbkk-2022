@@ -41,7 +41,10 @@
                     <ul class="navbar-nav me-auto">
                         <a class="nav-link" href="{{ route('publishers.index') }}">Publisher</a>
                     </ul>
-                    
+                    <ul class="navbar-nav me-auto">
+                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                    </ul>
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->

@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -46,7 +47,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('user.detail', compact('user'));
     }
 
     /**
@@ -81,5 +82,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function indexAdmin() 
+    {
+        // 
     }
 }

@@ -47,7 +47,6 @@ class WriterController extends Controller
      */
     public function show(Writer $writer)
     {
-        $writer = Writer::findOrFail($writer->id);
         return view('writer.detail', compact('writer'));
     }
 
@@ -83,5 +82,10 @@ class WriterController extends Controller
     public function destroy(Writer $writer)
     {
         //
+    }
+
+    public function indexAdmin() 
+    {
+        // 
     }
 }

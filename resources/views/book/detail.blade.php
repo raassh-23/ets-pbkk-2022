@@ -160,7 +160,7 @@
         @if (($book->reviews->count() > 1 && $user_review != NULL) || ($book->reviews->count() > 0 && $user_review == NULL ))
             @foreach ($book->reviews as $review)
                 @if ($review->user->id != Auth::user()->id)
-                    <a class="fw-bold fs-4" href="{{ url('/user/' . $review->user->id) }}">{{ $review->user->name }}</a>
+                    <a class="fw-bold fs-4" href="{{ route('users.show', ['user' => $review->user->id]) }}">{{ $review->user->name }}</a>
                     <p class="my-0">Rating: {{ $review->rating }}</p>
                     <p  class="my-0">{{ $review->review }}</p>
                     <br>

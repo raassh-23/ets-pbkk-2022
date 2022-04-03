@@ -48,8 +48,6 @@ class PublisherController extends Controller
      */
     public function show(Publisher $publisher)
     {
-        $publisher = Publisher::findorfail($publisher->id);
-
         return view('publisher.detail', compact('publisher'));
     }
 
@@ -85,5 +83,10 @@ class PublisherController extends Controller
     public function destroy(Publisher $publisher)
     {
         //
+    }
+
+    public function indexAdmin() 
+    {
+        // 
     }
 }
