@@ -19,7 +19,7 @@ class ReviewController extends Controller
     {
         if ($book->reviews()->where('user_id', $request->user()->id)->exists()) {
             return redirect()->back()->with([
-                'error' => 'Review tidak berhasil ditambahkan, kamu sudah pernah memberikan review untuk buku ini.',
+                'error' => 'Adding review failed. You already reviewed this book.',
             ]);
         }
         
@@ -36,12 +36,12 @@ class ReviewController extends Controller
 
         if ($review) {
             return redirect()->back()->with([
-                'success' => 'Review berhasil ditambahkan',
+                'success' => 'Review added successfully.',
             ]);
         }
 
         return redirect()->back()->with([
-            'error' => 'Review tidak berhasil ditambahkan',
+            'error' => 'Adding review failed.',
         ]);
     }
 
@@ -66,7 +66,7 @@ class ReviewController extends Controller
 
         if ( $review ) {
             return redirect()->back()->with([
-                'success' => 'Review berhasil diubah',
+                'success' => 'Review changed successfully.',
             ]);
         }
     }
@@ -82,7 +82,7 @@ class ReviewController extends Controller
         if ($review->user->id == Auth::user()->id) {
             $review->delete();
             return redirect()->back()->with([
-                'success' => 'Review berhasil dihapus',
+                'success' => 'Review deleted successfully.',
             ]);
         }
     }
