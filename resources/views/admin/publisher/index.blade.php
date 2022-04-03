@@ -2,9 +2,13 @@
 
 @section('content')
     <div class="container">
-        <h1>Manage Publishers</h1>
-        <a href="{{ route('admin.publishers.create') }}" class="btn btn-primary">Add Publisher</a>
-
+        <div class="d-flex justify-content-between">
+            <h1>Manage Publishers</h1>
+            <div>
+                <a href="{{ route('admin.publishers.create') }}" class="btn btn-primary">Add Publisher</a>
+            </div>
+        </div>
+        
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -27,8 +31,9 @@
             </div>
         @endif
 
-        <table>
+        <table class="table">
             <thead>
+                <th>No</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Address</th>
@@ -39,18 +44,20 @@
             <tbody>
                 @foreach ($publishers as $publisher)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $publisher->name }}</td>
                         <td>{{ $publisher->email }}</td>
                         <td>{{ $publisher->address }}</td>
                         <td>{{ $publisher->phone }}</td>
                         <td>{{ count($publisher->books) }}</td>
                         <td>
-                            <a href="{{ route('admin.publishers.edit', $publisher->id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ route('publishers.show', $publisher->id) }}" class="btn btn-primary">Details</a>
-                            <form action="{{ route('admin.publishers.destroy', $publisher->id) }}" method="POST">
+                            <a href="{{ route('admin.publishers.edit', $publisher->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="#" class="btn btn-danger" onclick="event.preventDefault();
+                            document.getElementById('delete-form').submit();">Delete</a>
+                            <form action="{{ route('admin.publishers.destroy', $publisher->id) }}" id="form-delete" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     <tr>
