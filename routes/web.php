@@ -36,8 +36,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class)->only(['index', 'show']);
 
-    Route::resource('categories', CategoryController::class)->only(['index', 'show']);
-
     Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
 
     Route::prefix('admin')->middleware('isAdmin')->group(function () {

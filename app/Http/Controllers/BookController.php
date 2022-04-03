@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -12,10 +13,22 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
-        return view('book.index', compact('books'));
+        $search = $request->query('search') ?: '';
+        $category = $request->query('category');
+
+        $books = Book::where('title', 'ilike', "%{$search}%");
+
+        if ($category) {
+            $books = $books->where('category_id', $category);
+        }
+
+        $books = $books->get();
+
+        $categories = Category::all();
+
+        return view('book.index', compact('books', 'categories'));
     }
 
     /**
