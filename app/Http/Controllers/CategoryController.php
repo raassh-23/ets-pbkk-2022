@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -35,7 +35,23 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+
+        if ($category) {
+            return redirect()->route('admin.categories.index')->with([
+                'success' => 'Category added successfully.',
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'error' => 'Category creation failed',
+        ]);
     }
 
     /**
@@ -57,7 +73,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -69,7 +85,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $newData = [
+            'name' => $request->name,
+        ];
+
+        $category->update($newData);
+
+        return redirect()->route('admin.categories.index')->with([
+            'success' => 'Category updated successfully.',
+        ]);
     }
 
     /**
@@ -80,7 +108,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->back()->with([
+            'success' => 'Category deleted successfully.',
+        ]);
     }
 
     public function indexAdmin() 
