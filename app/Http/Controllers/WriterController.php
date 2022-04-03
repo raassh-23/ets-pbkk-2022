@@ -13,9 +13,11 @@ class WriterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $writers = Writer::all();
+        $search = $request->search ?: '';
+        $writers = Writer::whereRaw('LOWER(name) like ?', ['%'.strtolower($search).'%'])->get();
+        
         return view('writer.index', compact('writers'));
     }
 
