@@ -26,8 +26,9 @@
             </div>
         @endif
 
-        <table>
+        <table class="table">
             <thead>
+                <th>No</th>
                 <th>User</th>
                 <th>Book</th>
                 <th>Rating</th>
@@ -37,15 +38,17 @@
             <tbody>
                 @foreach ($reviews as $review)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $review->user->name }}</td>
                         <td>{{ $review->book->title }}</td>
                         <td>{{ $review->rating }}</td>
                         <td>{{ $review->review }}</td>
                         <td>
-                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST">
+                            <a href="#" class="btn btn-danger" onclick="event.preventDefault();
+                            document.getElementById('{{ 'delete-form'.$review->id }}').submit();">Delete</a>
+                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" id="{{ 'delete-form'.$review->id }}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     <tr>
