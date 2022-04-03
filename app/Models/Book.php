@@ -16,6 +16,9 @@ class Book extends Model
         'isbn',
         'publish_year',
         'edition',
+        'writer_id',
+        'publisher_id',
+        'category_id',
     ];
 
     public function reviews()
