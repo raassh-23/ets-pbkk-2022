@@ -43,10 +43,10 @@
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->books->count() }}</td>
                         <td>
-                            <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('delete-form').submit();">Delete</a>
-                            <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
+                            document.getElementById('{{ 'delete-form'.$category->id }}').submit();">Delete</a>
+                            <form action="{{ route('admin.categories.destroy', $category->id) }}" id="{{ 'delete-form'.$category->id }}" class="d-none" method="POST">
                                 @csrf
                                 @method('DELETE')
                             </form>
