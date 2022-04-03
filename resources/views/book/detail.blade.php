@@ -18,8 +18,8 @@
                     <h6 class="ms-3">Edition: <b>{{ $book->edition }}</b></h6>
                     <h6 class="ms-3">ISBN: <b>{{ $book->isbn }}</b></h6>
                 </div>
-                <p>Category: {{ $book->category->name }}</p>
-                <p>Avg Rating: {{ $book->rating ? round($book->rating, 2) : 'No Review' }}</p>
+                <p class="mb-1">Category: <b>{{ $book->category->name }}</b></p>
+                <p class="mb-1">Average Rating: <b>{{ $book->rating ? round($book->rating, 2) : 'No Review' }}</b></p>
                 <p class="mt-2">{{ $book->synopsis }}</p>
             </div>
         </div>
