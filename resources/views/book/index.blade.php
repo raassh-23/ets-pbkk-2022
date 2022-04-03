@@ -6,7 +6,7 @@
 
         <div class="d-flex">
             
-            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-5 gx-3 gy-4">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-5 g-3">
                 @foreach ($books as $book)
                     <div class="col position-relative">
                         <div class="card h-100">

@@ -13,9 +13,12 @@ class PublisherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $publishers = Publisher::all();
+        $search = $request->search ?: '';
+
+        $publishers = Publisher::whereRaw('LOWER(name) like ?', ['%'.strtolower($search).'%']);
+        $publishers = $publishers->get();
 
         return view('publisher.index', compact('publishers'));
     }
