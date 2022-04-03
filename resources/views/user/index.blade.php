@@ -18,7 +18,7 @@
                                         <div class="col-md-8">
                                             <div class="card-body d-flex flex-column justify-content-between">
                                                 <a class="card-title fw-bold fs-5 stretched-link text-black text-decoration-none m-0"
-                                                    href="{{ route('users.show', ['user' => $user->id]) }}">{{ Str::limit($user->name, 30, '...') }}</a>
+                                                    href="{{ route('users.show', ['user' => $user->id]) }}">{{ Str::limit($user->name, 20, '...') }}</a>
                                             </div>
                                         </div>
                                     </div>
