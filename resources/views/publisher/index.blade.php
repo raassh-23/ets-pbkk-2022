@@ -8,6 +8,7 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-column justify-content-between">
+                            <img src="{{ $publisher->image_url }}" alt="{{ $publisher->name }}'s image" width="250px" height="330px">
                             <div>
                                 <h4 class="card-title">{{ $publisher->name }}</h4>
                             </div>

@@ -14,6 +14,7 @@ class Publisher extends Model
         'address',
         'phone',
         'email',
+        'image_url',
     ];
 
     public function books()

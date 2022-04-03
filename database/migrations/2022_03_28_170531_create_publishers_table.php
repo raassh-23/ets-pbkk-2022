@@ -19,6 +19,7 @@ class CreatePublishersTable extends Migration
             $table->string('address');
             $table->string('email');
             $table->string('phone');
+            $table->string('image_url');
             $table->timestamps();
         });
     }

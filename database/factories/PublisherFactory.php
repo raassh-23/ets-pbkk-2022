@@ -18,6 +18,7 @@ class PublisherFactory extends Factory
             'address' => $this->faker->address,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
+            'image_url' => $this->faker->imageUrl,
         ];
     }
 }

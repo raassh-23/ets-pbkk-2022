@@ -14,6 +14,7 @@ class Writer extends Model
         'address',
         'phone',
         'email',
+        'image_url',
     ];
 
     public function books()
