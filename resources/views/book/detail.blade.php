@@ -19,7 +19,7 @@
                     <h6 class="ms-3">ISBN: <b>{{ $book->isbn }}</b></h6>
                 </div>
                 <p>Category: {{ $book->category->name }}</p>
-                <p>Avg Rating: {{ $book->rating }}</p>
+                <p>Avg Rating: {{ $book->rating ?: 'no review yet' }}</p>
                 <p class="mt-2">{{ $book->synopsis }}</p>
             </div>
         </div>
