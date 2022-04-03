@@ -64,11 +64,9 @@ class ReviewController extends Controller
             'review' =>  $request->review,
         ]);
 
-        if ( $review ) {
-            return redirect()->back()->with([
-                'success' => 'Review changed successfully.',
-            ]);
-        }
+        return redirect()->back()->with([
+            'success' => 'Review changed successfully.',
+        ]);
     }
 
     /**

@@ -57,8 +57,8 @@ class WriterController extends Controller
         ]);
 
         if ($writer) {
-            return redirect()->back()->with([
-                'success' => 'Writer successfully created',
+            return redirect()->route('admin.writers.index')->with([
+                'success' => 'Writer added successfully.',
             ]);
         }
 
@@ -98,7 +98,32 @@ class WriterController extends Controller
      */
     public function update(Request $request, Writer $writer)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $newData = [
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ];
+
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('s3')->put('writers', $request->image);
+            $url = Storage::disk('s3')->url($path);
+            $newData['image_url'] = $url;
+        }
+
+        $writer->update($newData);
+
+        return redirect()->route('admin.writers.index')->with([
+            'success' => 'Writer updated successfully.',
+        ]);
     }
 
     /**
@@ -109,10 +134,14 @@ class WriterController extends Controller
      */
     public function destroy(Writer $writer)
     {
-        //
+        $writer->delete();
+
+        return redirect()->back()->with([
+            'success' => 'Writer deleted successfully.',
+        ]);
     }
 
-    public function indexAdmin() 
+    public function indexAdmin()
     {
         $writers = Writer::all();
         return view('admin.writer.index', compact('writers'));
