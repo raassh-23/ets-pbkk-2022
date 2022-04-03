@@ -18,8 +18,8 @@
                     <h6 class="ms-3">Edition: <b>{{ $book->edition }}</b></h6>
                     <h6 class="ms-3">ISBN: <b>{{ $book->isbn }}</b></h6>
                 </div>
-                <p>Category: {{ $book->category->name }}</p>
-                <p>Avg Rating: {{ $book->rating ? round($book->rating, 2) : 'No Review' }}</p>
+                <p class="mb-1">Category: <b>{{ $book->category->name }}</b></p>
+                <p class="mb-1">Average Rating: <b>{{ $book->rating ? round($book->rating, 2) : 'No Review' }}</b></p>
                 <p class="mt-2">{{ $book->synopsis }}</p>
             </div>
         </div>
@@ -32,7 +32,8 @@
                     <p class="my-0">{{ $user_review->review }}</p>
 
                     <div class="d-flex flex-row mt-3">
-                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $user_review->id]) }}" method="POST">
+                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $user_review->id]) }}" method="POST"
+                            onsubmit="return confirm('Are you sure?');">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -63,8 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewInput">Review</label>
-                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" 
-                                name="review" value="{{$user_review->review}}">
+                            <textarea class="form-control" id="reviewInputID" rows="3" name="review" placeholder="Enter review" required>{{$user_review->review}}</textarea>
                         </div>
                         <div class="d-flex flex-row mt-3">
                             <a class="btn btn-light" 
@@ -112,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewInput">Review</label>
-                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" name="review">
+                            <textarea class="form-control" id="reviewInputID" rows="3" name="review" placeholder="Enter review" required></textarea>
                         </div>
                         <div class="d-flex flex-row mt-3">
                             <a class="btn btn-light" 
@@ -141,7 +141,7 @@
         @endif
 
         @if (session('error'))
-            <div class="alert alert-error">
+            <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif

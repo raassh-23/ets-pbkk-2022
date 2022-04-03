@@ -38,16 +38,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('books.index') }}">Book</a>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('writers.index') }}">Writer</a>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('publishers.index') }}">Publisher</a>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                        <li><a class="nav-link" href="{{ route('books.index') }}">Book</a></li>
+                        <li><a class="nav-link" href="{{ route('writers.index') }}">Writer</a></li>
+                        <li><a class="nav-link" href="{{ route('publishers.index') }}">Publisher</a></li>
+                        <li><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,6 +60,14 @@
                                 </li>
                             @endif
                         @else
+                            @if (Auth::user()->role == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                        Dashboard
+                                    </a>
+                                </li>
+                            @endif
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -73,14 +75,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->role == 1)
-                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                            Dashboard
-                                        </a>
-                                    @endif
-
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
