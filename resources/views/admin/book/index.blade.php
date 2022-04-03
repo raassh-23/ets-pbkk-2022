@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Manage Books</h1>
+        <a href="{{ route('admin.books.create') }}" class="btn btn-primary">Add Book</a>
 
         <table>
             <thead>

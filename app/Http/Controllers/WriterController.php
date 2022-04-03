@@ -86,6 +86,7 @@ class WriterController extends Controller
 
     public function indexAdmin() 
     {
-        // 
+        $writers = Writer::all();
+        return view('admin.writer.index', compact('writers'));
     }
 }
