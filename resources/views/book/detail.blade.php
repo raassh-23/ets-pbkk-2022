@@ -8,7 +8,7 @@
         <h4>Written by
             @foreach ($book->writers as $writer)
                 <a
-                    href="{{ url('/writer/' . $writer->id) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
+                    href="{{ url('/writers/' . $writer->id) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
             @endforeach
         </h4>
         <img src="{{ $book->cover_image }}" alt="image" width="300px" class="img-fluid">
@@ -19,17 +19,17 @@
 
         <h2>Review</h2>
         @foreach ($book->reviews as $review)
-            <a href="{{ url('/user/' . $review->user->id) }}">{{ $review->user->name }}</a>
+            <a href="{{ url('/users/' . $review->user->id) }}">{{ $review->user->name }}</a>
             <p>Rating: {{ $review->rating }}</p>
             <p>{{ $review->review }}</p>
             @if ($review->user->id == Auth::user()->id)
-                <form action="{{ url('/review/' . $review->id) }}" method="POST">
+                <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $review->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
 
-                <form method='POST' action="{{ url('/review/' . $review->id) }}">
+                <form method='POST' action="{{ route('books.reviews.update', ['book' => $book->id, 'review' => $review->id]) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" value="{{ $book->id }}" name="book_id">
@@ -81,9 +81,8 @@
             </div>
         @endif
 
-        <form method='POST' action="/review">
+        <form method='POST' action={{ route('books.reviews.store', ['book' => $book->id]) }}>
             @csrf
-            <input type="hidden" value="{{ $book->id }}" name="book_id">
             <div class="form-group">
                 <label for="ratingInput">Rating</label>
                 <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"

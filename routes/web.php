@@ -4,7 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
 use App\Http\Controllers\ReviewController;
-use App\Models\Publisher;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,13 +26,26 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::resource('book', BookController::class)->except('index');
 
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
-    Route::resource('writer', WriterController::class);
+    Route::resource('books', BookController::class)->only(['index', 'show']);
 
-    Route::resource('publisher', PublisherController::class);
+    Route::resource('writers', WriterController::class)->only(['index', 'show']);
 
-    Route::resource('review', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
+    Route::resource('publishers', PublisherController::class)->only(['index', 'show']);
+
+    Route::resource('users', UserController::class)->only(['index', 'show']);
+
+    Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
+
+    Route::middleware('isAdmin')->group(function () {
+        Route::resource('books', BookController::class)->except(['index', 'show']);
+
+        Route::resource('writers', WriterController::class)->except(['index', 'show']);
+    
+        Route::resource('publishers', PublisherController::class)->except(['index', 'show']);
+    
+        Route::resource('users', UserController::class)->except(['index', 'show']);
+    });
 });

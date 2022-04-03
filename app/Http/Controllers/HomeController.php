@@ -24,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->role == 0){
+            return redirect()->route('books.index');
+        }
+
         $books = Book::all();
         return view('dashboard', compact('books'));
     }

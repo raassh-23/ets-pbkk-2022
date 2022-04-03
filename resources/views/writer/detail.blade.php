@@ -20,7 +20,7 @@
                                 <h4 class="card-title">{{ $book->title }}</h4>
                                 <p class="card-text">{{ Str::limit($book->synopsis, 200, '...') }}</p>
                             </div>
-                            <a href="{{ url('/book/'.$book->id) }}" class="btn btn-primary mt-2">Details</a>
+                            <a href="{{ route('books.show', ['book' => $book->id]) }}" class="btn btn-primary mt-2">Details</a>
                         </div>
                     </div>
                 </div>
