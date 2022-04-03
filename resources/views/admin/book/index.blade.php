@@ -29,7 +29,7 @@
                     </td>
                     <td>{{ $book->publisher->name }}</td>
                     <td>{{ count($book->reviews) }}</td>
-                    <td>{{ $book->rating }}</td>
+                    <td>{{ $book->rating ? round($book->rating, 2) : 0 }}</td>
                     <td>
                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-primary">Edit</a>
                         <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">Details</a>
