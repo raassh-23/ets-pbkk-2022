@@ -17,7 +17,7 @@
         <p>Edition: {{ $book->edition }}</p>
         <p>ISBN: {{ $book->isbn }}</p>
         <p>Category: {{ $book->category->name }}</p>
-        <p>Avg Rating: {{ $book->rating }}</p>
+        <p>Avg Rating: {{ $book->rating ?: 'no review yet' }}</p>
 
         <h2>Review ({{ count($book->reviews) }})</h2>
         @foreach ($book->reviews as $review)
