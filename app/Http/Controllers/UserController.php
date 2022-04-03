@@ -13,9 +13,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $search = $request->search ?: '';
+        $users = User::whereRaw('LOWER(name) like ?', ['%'.strtolower($search).'%'])->get();
+
         return view('user.index', compact('users'));
     }
 
