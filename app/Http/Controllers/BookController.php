@@ -18,7 +18,7 @@ class BookController extends Controller
         $search = $request->query('search') ?: '';
         $category = $request->query('category');
 
-        $books = Book::where('title', 'ilike', "%{$search}%");
+        $books = Book::where('title', 'like', "%{$search}%");
 
         if ($category) {
             $books = $books->where('category_id', $category);

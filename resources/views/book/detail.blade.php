@@ -32,7 +32,7 @@
                     <p class="my-0">{{ $user_review->review }}</p>
 
                     <div class="d-flex flex-row mt-3">
-                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $review->id]) }}" method="POST">
+                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $user_review->id]) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="edit-review" style="display: none">
                     <h4 class="fw-bold">Edit your review</h4>
-                    <form method='POST' action="{{ route('books.reviews.update', ['book' => $book->id, 'review' => $review->id]) }}">
+                    <form method='POST' action="{{ route('books.reviews.update', ['book' => $book->id, 'review' => $user_review->id]) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
