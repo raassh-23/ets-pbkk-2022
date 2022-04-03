@@ -34,7 +34,7 @@
         <table class="table">
             <thead>
                 <th>Category Name</th>
-                <th># Books</th>
+                <th>Number of Books</th>
                 <th>Actions</th>
             </thead>
             <tbody>
