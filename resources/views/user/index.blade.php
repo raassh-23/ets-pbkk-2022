@@ -8,6 +8,7 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-column justify-content-between">
+                            <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}'s image" width="250px" height="330px">
                             <div>
                                 <h4 class="card-title">{{ $user->name }}</h4>
                             </div>

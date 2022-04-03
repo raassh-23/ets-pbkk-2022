@@ -4,6 +4,7 @@
     <div class="container">
         <h1>User Detail</h1>
         
+        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}'s avatar" width="250px" height="330px">
         <h2>{{ $user->name }}</h2>
         <p>Email: {{ $user->email }}</p>
 

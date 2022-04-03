@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/books';
 
     /**
      * Create a new controller instance.
@@ -53,6 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
         ]);
     }
 
@@ -64,10 +66,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $avatarUrl = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($data['email']))) . "?d=identicon&r=g&s=128";
+
+        if (isset($data['avatar'])) {
+            $path = Storage::disk('s3')->put('avatars', $data['avatar']);
+            $avatarUrl = Storage::disk('s3')->url($path);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'avatar_url' => $avatarUrl,
         ]);
     }
 }
