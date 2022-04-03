@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Writer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WriterController extends Controller
 {
@@ -25,7 +26,7 @@ class WriterController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.writer.create');
     }
 
     /**
@@ -36,7 +37,34 @@ class WriterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $path = Storage::disk('s3')->put('writers', $request->image);
+        $url = Storage::disk('s3')->url($path);
+
+        $writer = Writer::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'image_url' => $url,
+        ]);
+
+        if ($writer) {
+            return redirect()->back()->with([
+                'success' => 'Writer successfully created',
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'error' => 'Writer creation failed',
+        ]);
     }
 
     /**
@@ -58,7 +86,7 @@ class WriterController extends Controller
      */
     public function edit(Writer $writer)
     {
-        //
+        return view('admin.writer.edit', compact('writer'));
     }
 
     /**
