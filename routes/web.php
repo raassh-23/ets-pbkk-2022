@@ -55,12 +55,14 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/users', [UserController::class, 'indexAdmin'])->name('users.index');
     
-        Route::resource('users', UserController::class)->except(['index', 'show']);
+        Route::resource('users', UserController::class)->only(['update', 'destroy']);
     
         Route::get('/categories', [CategoryController::class, 'indexAdmin'])->name('categories.index');
 
         Route::resource('categories', CategoryController::class)->except(['index', 'show']);
 
         Route::get('/reviews', [ReviewController::class, 'indexAdmin'])->name('reviews.index');
+
+        Route::delete('/reviews/{review}', [ReviewController::class, 'destroyAdmin'])->name('reviews.destroy');
     });
 });

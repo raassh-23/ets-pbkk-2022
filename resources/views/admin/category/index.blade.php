@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Manage Categories</h1>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Add Category</a>
 
         <table>
             <thead>
