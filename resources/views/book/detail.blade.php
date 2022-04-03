@@ -2,73 +2,137 @@
 
 @section('content')
     <div class="container">
-        <h1>Book Detail</h1>
+        <div class="d-flex flex-row">
+            <img src="{{ $book->cover_image }}" alt="{{ $book->title }}'s cover image" width="250px" height="330px">
+            <div class="d-flex flex-column ms-3 mt-1">
+                <h1 class="fw-bolder">{{ $book->title }}</h1>
+                <h5>by :
+                    @foreach ($book->writers as $writer)
+                        <a
+                            href="{{ url('/writer/' . $writer->id) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
+                    @endforeach
+                </h5>
+                <h5>{{ $book->publisher->name }}</h5>
+                <div class="d-flex flex-row">
+                    <h6>Year: <b>{{ $book->publish_year }}</b></h6>
+                    <h6 class="ms-3">Edition: <b>{{ $book->edition }}</b></h6>
+                    <h6 class="ms-3">ISBN: <b>{{ $book->isbn }}</b></h6>
+                </div>
+                <p class="mt-2">{{ $book->synopsis }}</p>
+            </div>
+        </div>
+        @php $user_review = Auth::user()->reviews->where('book_id', $book->id)->first() @endphp
+        <div class="container my-4 border border-2 rounded p-3">
+            @if ($user_review != NULL)
+                <div class="view-review">
+                    <h4 class="fw-bold">Your review</h4>
+                    <p class="my-0">Rating: {{ $user_review->rating }}</p>
+                    <p class="my-0">{{ $user_review->review }}</p>
 
-        <h2>{{ $book->title }}</h2>
-        <h4>Written by
-            @foreach ($book->writers as $writer)
-                <a
-                    href="{{ url('/writer/' . $writer->id) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
-            @endforeach
-        </h4>
-        <img src="{{ $book->cover_image }}" alt="image" width="300px" class="img-fluid">
-        <p>{{ $book->synopsis }}</p>
-        <p>Year: {{ $book->publish_year }}</p>
-        <p>Edition: {{ $book->edition }}</p>
-        <p>ISBN: {{ $book->isbn }}</p>
-
-        <h2>Review</h2>
-        @foreach ($book->reviews as $review)
-            <a href="{{ url('/user/' . $review->user->id) }}">{{ $review->user->name }}</a>
-            <p>Rating: {{ $review->rating }}</p>
-            <p>{{ $review->review }}</p>
-            @if ($review->user->id == Auth::user()->id)
-                <form action="{{ url('/review/' . $review->id) }}" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-
-                <form method='POST' action="{{ url('/review/' . $review->id) }}">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" value="{{ $book->id }}" name="book_id">
-                    <div class="form-group">
-                        <label for="ratingInput">Rating</label>
-                        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
-                            placeholder="Enter rating" name="rating" value="{{$review->rating}}">
+                    <div class="d-flex flex-row mt-3">
+                        <form action="{{ url('/review/' . $user_review->id) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <button type="submit" class="btn btn-primary ms-2"  href="#" 
+                            onclick="
+                            $('.edit-review').slideToggle(
+                                function(){
+                                    $('#more').html($('.edit-review').is(':visible'));
+                                }
+                            );
+                            $('.view-review').slideToggle(
+                                function(){
+                                    $('#more').html($('.view-review').is(':visible'));
+                                }
+                            );">Edit</button>
                     </div>
-                    <div class="form-group">
-                        <label for="reviewInput">Review</label>
-                        <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" 
-                            name="review" value="{{$review->review}}">
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                {{-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#{{$review->id}}">Edit</button> --}}
-                
-                {{-- <div class="modal" tabindex="-1" role="dialog" id="{{$review->id}}">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Edit review</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                </div>
+                <div class="edit-review" style="display: none">
+                    <h4 class="fw-bold">Edit your review</h4>
+                    <form method='POST' action="{{ url('/review/' . $user_review->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" value="{{ $book->id }}" name="book_id">
+                        <div class="form-group">
+                            <label for="ratingInput">Rating</label>
+                            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
+                                placeholder="Enter rating" name="rating" value="{{$user_review->rating}}">
                         </div>
-                    </div>
-                </div> --}}
+                        <div class="form-group">
+                            <label for="reviewInput">Review</label>
+                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" 
+                                name="review" value="{{$user_review->review}}">
+                        </div>
+                        <div class="d-flex flex-row mt-3">
+                            <a class="btn btn-light" 
+                                onclick="
+                                $('.edit-review').slideToggle(
+                                    function(){
+                                        $('#more').html($('.edit-review').is(':visible'));
+                                    }
+                                );
+                                $('.view-review').slideToggle(
+                                    function(){
+                                        $('#more').html($('.view-review').is(':visible'));
+                                    }
+                                );">Cancel</a>
+                            <button type="submit" class="btn btn-primary ms-2">Edit Review</button>
+                        </div>
+                    </form>
+                </div>
+            @else
+                <div class="no-review">
+                    <h5>You haven't reviewed this book yet.</h5>
+                <button class="btn btn-primary" 
+                    onclick="
+                    $('.add-review').slideToggle(
+                        function(){
+                            $('#more').html($('.add-review').is(':visible'));
+                        }
+                    );
+                    $('.no-review').slideToggle(
+                        function(){
+                            $('#more').html($('.no-review').is(':visible'));
+                        }
+                    );">Add review</button>
+                </div>
+                
+                <div class="add-review" style="display: none">
+                    <h4 class="fw-bold">Add your review</h4>
+                    <form method='POST' action="/review">
+                        @csrf
+                        <input type="hidden" value="{{ $book->id }}" name="book_id">
+                        <div class="form-group">
+                            <label for="ratingInput">Rating</label>
+                            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
+                                placeholder="Enter rating" name="rating">
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewInput">Review</label>
+                            <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" name="review">
+                        </div>
+                        <div class="d-flex flex-row mt-3">
+                            <a class="btn btn-light" 
+                                onclick="
+                                $('.add-review').slideToggle(
+                                    function(){
+                                        $('#more').html($('.add-review').is(':visible'));
+                                    }
+                                );
+                                $('.no-review').slideToggle(
+                                    function(){
+                                        $('#more').html($('.no-review').is(':visible'));
+                                    }
+                                );">Cancel</a>
+                            <button type="submit" class="btn btn-primary ms-2">Send Review</button>
+                        </div>
+                    </form>
+                </div>
             @endif
-        @endforeach
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -81,23 +145,6 @@
             </div>
         @endif
 
-        <form method='POST' action="/review">
-            @csrf
-            <input type="hidden" value="{{ $book->id }}" name="book_id">
-            <div class="form-group">
-                <label for="ratingInput">Rating</label>
-                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
-                    placeholder="Enter rating" name="rating">
-            </div>
-            <div class="form-group">
-                <label for="reviewInput">Review</label>
-                <input type="text" class="form-control" id="reviewInputID" placeholder="Enter review" name="review">
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
-        <br>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -107,6 +154,19 @@
                 </ul>
             </div>
         @endif
-    </div>
 
+        <h2>Reviews</h2>
+        @if (($book->reviews->count() > 1 && $user_review != NULL) || ($book->reviews->count() > 0 && $user_review == NULL ))
+            @foreach ($book->reviews as $review)
+                @if ($review->user->id != Auth::user()->id)
+                    <a class="fw-bold fs-4" href="{{ url('/user/' . $review->user->id) }}">{{ $review->user->name }}</a>
+                    <p class="my-0">Rating: {{ $review->rating }}</p>
+                    <p  class="my-0">{{ $review->review }}</p>
+                    <br>
+                @endif
+            @endforeach
+        @else
+            <h5>No reviews.</h5>
+        @endif
+    </div>
 @endsection
