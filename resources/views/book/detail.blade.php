@@ -16,8 +16,10 @@
         <p>Year: {{ $book->publish_year }}</p>
         <p>Edition: {{ $book->edition }}</p>
         <p>ISBN: {{ $book->isbn }}</p>
+        <p>Category: {{ $book->category->name }}</p>
+        <p>Avg Rating: {{ $book->rating }}</p>
 
-        <h2>Review</h2>
+        <h2>Review ({{ count($book->reviews) }})</h2>
         @foreach ($book->reviews as $review)
             <a href="{{ url('/users/' . $review->user->id) }}">{{ $review->user->name }}</a>
             <p>Rating: {{ $review->rating }}</p>

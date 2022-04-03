@@ -17,6 +17,12 @@ class ReviewController extends Controller
      */
     public function store(Book $book, Request $request)
     {
+        if ($book->reviews()->where('user_id', $request->user()->id)->exists()) {
+            return redirect()->back()->with([
+                'error' => 'Review tidak berhasil ditambahkan, kamu sudah pernah memberikan review untuk buku ini.',
+            ]);
+        }
+        
         $request->validate([
             'rating' => 'required|integer|min:1|max:10',
             'review' => 'required|string',
@@ -28,11 +34,12 @@ class ReviewController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        if ( $review ) {
+        if ($review) {
             return redirect()->back()->with([
                 'success' => 'Review berhasil ditambahkan',
             ]);
         }
+
         return redirect()->back()->with([
             'error' => 'Review tidak berhasil ditambahkan',
         ]);

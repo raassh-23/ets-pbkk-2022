@@ -29,10 +29,11 @@ class LoginController extends Controller
     protected $redirectTo = '/books';
 
     protected function redirectTo()
-    {
+    { 
         if (auth()->user()->role == 1) {
-            return '/dashboard';
+            return '/admin/dashboard';
         }
+        
         return '/books';
     }
 
