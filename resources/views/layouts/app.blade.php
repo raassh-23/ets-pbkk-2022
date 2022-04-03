@@ -33,13 +33,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ url('/dashboard') }}">Book</a>
+                        <a class="nav-link" href="{{ route('books.index') }}">Book</a>
                     </ul>
                     <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ url('/writer') }}">Writer</a>
+                        <a class="nav-link" href="{{ route('writers.index') }}">Writer</a>
                     </ul>
                     <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ url('/publisher') }}">Publisher</a>
+                        <a class="nav-link" href="{{ route('publishers.index') }}">Publisher</a>
                     </ul>
                     
                     <!-- Right Side Of Navbar -->

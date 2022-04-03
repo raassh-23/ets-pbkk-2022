@@ -18,6 +18,8 @@
                     <h6 class="ms-3">Edition: <b>{{ $book->edition }}</b></h6>
                     <h6 class="ms-3">ISBN: <b>{{ $book->isbn }}</b></h6>
                 </div>
+                <p>Category: {{ $book->category->name }}</p>
+                <p>Avg Rating: {{ $book->rating }}</p>
                 <p class="mt-2">{{ $book->synopsis }}</p>
             </div>
         </div>
@@ -30,7 +32,7 @@
                     <p class="my-0">{{ $user_review->review }}</p>
 
                     <div class="d-flex flex-row mt-3">
-                        <form action="{{ url('/review/' . $user_review->id) }}" method="POST">
+                        <form action="{{ route('books.reviews.destroy', ['book' => $book->id, 'review' => $review->id]) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -51,10 +53,9 @@
                 </div>
                 <div class="edit-review" style="display: none">
                     <h4 class="fw-bold">Edit your review</h4>
-                    <form method='POST' action="{{ url('/review/' . $user_review->id) }}">
+                    <form method='POST' action="{{ route('books.reviews.update', ['book' => $book->id, 'review' => $review->id]) }}">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" value="{{ $book->id }}" name="book_id">
                         <div class="form-group">
                             <label for="ratingInput">Rating</label>
                             <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="ratingHelp"
@@ -101,7 +102,7 @@
                 
                 <div class="add-review" style="display: none">
                     <h4 class="fw-bold">Add your review</h4>
-                    <form method='POST' action="/review">
+                    <form method='POST' action="{{ route('books.reviews.store', ['book' => $book->id]) }}">
                         @csrf
                         <input type="hidden" value="{{ $book->id }}" name="book_id">
                         <div class="form-group">
@@ -155,7 +156,7 @@
             </div>
         @endif
 
-        <h2>Reviews</h2>
+        <h2>Reviews ({{ count($book->reviews) }})</h2>
         @if (($book->reviews->count() > 1 && $user_review != NULL) || ($book->reviews->count() > 0 && $user_review == NULL ))
             @foreach ($book->reviews as $review)
                 @if ($review->user->id != Auth::user()->id)
@@ -166,7 +167,7 @@
                 @endif
             @endforeach
         @else
-            <h5>No reviews.</h5>
+            <h5>No other reviews.</h5>
         @endif
     </div>
 @endsection

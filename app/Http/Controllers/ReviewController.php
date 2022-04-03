@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,25 +15,31 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Book $book, Request $request)
     {
+        if ($book->reviews()->where('user_id', $request->user()->id)->exists()) {
+            return redirect()->back()->with([
+                'error' => 'Review tidak berhasil ditambahkan, kamu sudah pernah memberikan review untuk buku ini.',
+            ]);
+        }
+        
         $request->validate([
             'rating' => 'required|integer|min:1|max:10',
-            'review' => 'required|string'
+            'review' => 'required|string',
         ]);
 
-        $review = Review::create([
+        $review = $book->reviews()->create([
             'rating' => $request->rating,
             'review' =>  $request->review,
             'user_id' => $request->user()->id,
-            'book_id' => $request->book_id
         ]);
 
-        if ( $review ) {
+        if ($review) {
             return redirect()->back()->with([
                 'success' => 'Review berhasil ditambahkan',
             ]);
         }
+
         return redirect()->back()->with([
             'error' => 'Review tidak berhasil ditambahkan',
         ]);
@@ -45,11 +52,11 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Book $book, Request $request, Review $review)
     {
         $request->validate([
             'rating' => 'required|integer|min:1|max:10',
-            'review' => 'required|string'
+            'review' => 'required|string',
         ]);
 
         $review->update([
@@ -70,7 +77,7 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Book $book, Review $review)
     {
         if ($review->user->id == Auth::user()->id) {
             $review->delete();

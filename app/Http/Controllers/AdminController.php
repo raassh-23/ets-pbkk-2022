@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class AdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,7 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        return view('dashboard', compact('books'));
+        return view('admin.dashboard');
     }
 }

@@ -11,7 +11,7 @@
                             <div>
                                 <h4 class="card-title">{{ $publisher->name }}</h4>
                             </div>
-                            <a href="{{ url('/publisher/'.$publisher->id) }}" class="btn btn-primary mt-2">Details</a>
+                            <a href="{{ route('publishers.show', ['publisher' => $publisher->id]) }}" class="btn btn-primary mt-2">Details</a>
                         </div>
                     </div>
                 </div>

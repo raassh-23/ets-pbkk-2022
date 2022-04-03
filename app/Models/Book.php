@@ -23,7 +23,7 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function categories()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -36,5 +36,10 @@ class Book extends Model
     public function writers()
     {
         return $this->belongsToMany(Writer::class);
+    }
+
+    public function getRatingAttribute()
+    {
+        return $this->reviews->avg('rating');
     }
 }
