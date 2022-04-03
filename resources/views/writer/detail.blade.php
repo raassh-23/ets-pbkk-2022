@@ -2,14 +2,18 @@
 
 @section('content')
     <div class="container">
-        <h1>Writer Detail</h1>
-        
-        <h2>{{ $writer->name }}</h2>
-        <p>Address: {{ $writer->address }}</p>
-        <p>Phone: {{ $writer->phone }}</p>
-        <p>Email: {{ $writer->email }}</p>
+        <div class="d-flex flex-row">
+            <img src="{{ $writer->image_url }}" alt="{{ $writer->name }}'s cover image" width="200px" height="200px">
+            <div class="d-flex flex-column ms-3 mt-1">
+                <h6 class="text-primary mb-0">WRITER</h6>
+                <h1 class="fw-bolder">{{ $writer->name }}</h1>
+                <p class="mb-1"><b>Address</b> {{ $writer->address }}</p>
+                <p class="mb-1"><b>Email</b> {{ $writer->email }}</p>
+                <p><b>Phone</b> {{ $writer->phone }}</p>
+            </div>
+        </div>
 
-        <h2>Books</h2>
+        <h2 class="mt-5">Books ({{ count($writer->books) ?: 0 }})</h2>
         <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
             @foreach ($writer->books as $book)
                 <div class="col">
