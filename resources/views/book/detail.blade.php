@@ -9,7 +9,7 @@
                 <h5>by :
                     @foreach ($book->writers as $writer)
                         <a
-                            href="{{ url('/writer/' . $writer->id) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
+                            href="{{ route('writers.show', ['writer' => $writer->id]) }}">{{ $loop->last ? $writer->name : $writer->name . ',' }}</a>
                     @endforeach
                 </h5>
                 <h5>{{ $book->publisher->name }}</h5>

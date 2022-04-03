@@ -99,6 +99,8 @@ class BookController extends Controller
 
     public function indexAdmin() 
     {
-        // 
+        $books = Book::all();
+
+        return view('admin.book.index', compact('books'));
     }
 }
