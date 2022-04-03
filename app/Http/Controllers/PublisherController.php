@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PublisherController extends Controller
 {
@@ -26,7 +27,7 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.publisher.create');
     }
 
     /**
@@ -37,7 +38,34 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $path = Storage::disk('s3')->put('publishers', $request->image);
+        $url = Storage::disk('s3')->url($path);
+
+        $publisher = Publisher::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'image_url' => $url,
+        ]);
+
+        if ($publisher) {
+            return redirect()->route('admin.publishers.index')->with([
+                'success' => 'Publisher added successfully.',
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'error' => 'Publisher creation failed',
+        ]);
     }
 
     /**
@@ -59,7 +87,7 @@ class PublisherController extends Controller
      */
     public function edit(Publisher $publisher)
     {
-        //
+        return view('admin.publisher.edit', compact('publisher'));
     }
 
     /**
@@ -71,7 +99,32 @@ class PublisherController extends Controller
      */
     public function update(Request $request, Publisher $publisher)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $newData = [
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ];
+
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('s3')->put('writers', $request->image);
+            $url = Storage::disk('s3')->url($path);
+            $newData['image_url'] = $url;
+        }
+
+        $publisher->update($newData);
+
+        return redirect()->route('admin.publishers.index')->with([
+            'success' => 'Publisher updated successfully.',
+        ]);
     }
 
     /**
@@ -82,7 +135,11 @@ class PublisherController extends Controller
      */
     public function destroy(Publisher $publisher)
     {
-        //
+        $publisher->delete();
+
+        return redirect()->back()->with([
+            'success' => 'Publisher deleted successfully.',
+        ]);
     }
 
     public function indexAdmin() 
