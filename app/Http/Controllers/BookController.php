@@ -18,8 +18,8 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->query('search') ?: '';
-        $category = $request->query('category');
+        $search = $request->search ?: '';
+        $category = $request->category;
 
         $books = Book::whereRaw('LOWER(title) like ?', ['%'.strtolower($search).'%']);
 
