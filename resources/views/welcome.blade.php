@@ -1,8 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $startup_title = "ReviewYourBooks"
+    @endphp
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+        .welcome {
+            position: relative;
+        }
+        .textWelcome {
+            position: absolute;
+            right: 20px;
+            top: 150px;
+            width: 600px;
+        }
+        #titleWelcome {
+            font-family: 'Rubik', sans-serif;
+            font-size: 84px;
+            color: #5e5343;
+            line-height: 80px;
+        }
+
+        #subtitleWelcome {
+            color: #5e5343;
+            font-size: 18px;
+            line-height: 50px;
+        }
+
+        #contentWelcome {
+            width: 600px;
+            right: -200px;
+        }
+        
+
+    </style>
     <div class="container">
-        <h1><b>Welcome!</b> Let's review a book!</h1>
+        {{-- <h1><b> {{ $startup_title }}</b></h1> --}}
+        <div class="welcome">
+            <img src="{{URL::asset('../images/homepage-background.png')}}" alt="Welcome Pictures" height="610" width="100%">
+            <span class="textWelcome">
+                <h1 id="titleWelcome">Review<br>YourBooks</h1>
+                <h4 id="subtitleWelcome"><b>THE WORLD OF BOOKS REVIEW & RATING</b></h4>
+                <p id="contentWelcome"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam ea deleniti nemo ipsam dolor. 
+                    Tenetur, aliquid optio maxime, ipsum id nostrum incidunt, iusto perspiciatis corporis 
+                    facere qui culpa nesciunt adipisci?</p>
+                <button class="btnChooseBooks">Choose Your Book</button>
+            </span>
+        </div>
+
 
         <h2 class="mt-4">Most Reviewed</h2>
         @php

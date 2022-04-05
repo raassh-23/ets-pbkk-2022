@@ -36,8 +36,8 @@
                 <th>No</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Book Count</th>
-                <th>Actions</th>
+                <th style="text-align: center">Book Count</th>
+                <th style="text-align: center">Actions</th>
             </thead>
             <tbody>
                 @foreach ($writers as $writer)
@@ -45,8 +45,8 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $writer->name }}</td>
                         <td>{{ $writer->email }}</td>
-                        <td>{{ count($writer->books) }}</td>
-                        <td>
+                        <td style="text-align: center">{{ count($writer->books) }}</td>
+                        <td style="text-align: center">
                             <a href="{{ route('writers.show', $writer->id) }}" class="btn btn-primary">Details</a>
                             <a href="{{ route('admin.writers.edit', $writer->id) }}" class="btn btn-warning">Edit</a>
                             <a href="#" class="btn btn-danger" onclick="event.preventDefault();
