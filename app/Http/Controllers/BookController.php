@@ -29,7 +29,7 @@ class BookController extends Controller
 
         $books = $books->get();
 
-        $categories = Category::all();
+        $categories = Category::orderBy('name', 'asc')->get();
 
         return view('book.index', compact('books', 'categories'));
     }
