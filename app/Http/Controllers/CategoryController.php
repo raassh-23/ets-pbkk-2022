@@ -35,9 +35,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        $request->validate(
+            ['name' => 'required|unique:App\Models\Category,name',],
+            ['name.unique' => 'Category is already exist.',]
+        );
 
         $category = Category::create([
             'name' => $request->name,
