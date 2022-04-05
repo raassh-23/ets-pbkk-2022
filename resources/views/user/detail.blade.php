@@ -13,10 +13,18 @@
 
         <h2 class="mt-4">Reviews ({{ count($user->reviews) ?: 0 }})</h2>
         @foreach ($user->reviews as $review)
-            <a class="fw-bold fs-4" href="{{ route('books.show', ['book' => $review->book->id]) }}">{{ $review->book->title }}</a>
-            <p class="my-0">Rating: {{ $review->rating }}</p>
-            <p class="my-0">{{ $review->review }}</p>
-            <br>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a class="fw-bold fs-4" href="{{ route('users.show', ['user' => $review->user->id]) }}">{{ $review->user->name }}</a>
+                    <div class="d-flex flex-row">
+                        <span style="color: Orange;">
+                            <i class="fas fa-star fa-large"></i>
+                        </span>
+                        <p class="ms-1 mb-0">{{ round($review->rating, 2) ?: '-'}}</p>
+                    </div>
+                    <p  class="my-0">{{ $review->review }}</p>
+                </div>
+            </div>
         @endforeach
     </div>
 @endsection

@@ -28,7 +28,12 @@
             @if ($user_review != NULL)
                 <div class="view-review">
                     <h4 class="fw-bold">Your review</h4>
-                    <p class="my-0">Rating: {{ $user_review->rating }}</p>
+                    <div class="d-flex flex-row">
+                        <span style="color: Orange;">
+                            <i class="fas fa-star fa-large"></i>
+                        </span>
+                        <p class="ms-1 mb-0">{{ round($user_review->rating, 2) }}</p>
+                    </div>
                     <p class="my-0">{{ $user_review->review }}</p>
 
                     <div class="d-flex flex-row mt-3">
@@ -160,10 +165,18 @@
         @if (($book->reviews->count() > 1 && $user_review != NULL) || ($book->reviews->count() > 0 && $user_review == NULL ))
             @foreach ($book->reviews as $review)
                 @if ($review->user->id != Auth::user()->id)
-                    <a class="fw-bold fs-4" href="{{ route('users.show', ['user' => $review->user->id]) }}">{{ $review->user->name }}</a>
-                    <p class="my-0">Rating: {{ $review->rating }}</p>
-                    <p  class="my-0">{{ $review->review }}</p>
-                    <br>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <a class="fw-bold fs-4" href="{{ route('users.show', ['user' => $review->user->id]) }}">{{ $review->user->name }}</a>
+                            <div class="d-flex flex-row">
+                                <span style="color: Orange;">
+                                    <i class="fas fa-star fa-large"></i>
+                                </span>
+                                <p class="ms-1 mb-0">{{ round($review->rating, 2) ?: '-'}}</p>
+                            </div>
+                            <p  class="my-0">{{ $review->review }}</p>
+                        </div>
+                    </div>
                 @endif
             @endforeach
         @else
