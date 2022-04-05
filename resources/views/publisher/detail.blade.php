@@ -33,7 +33,11 @@
                                 <span style="color: Orange;">
                                     <i class="fas fa-star"></i>
                                 </span>
-                                <p class="ms-1 mb-0">{{ $book->rating ? round($book->rating, 2) : '-' }}</p>
+                                @if ($book->rating)
+                                    <p class="ms-1 mb-0">{{ round($book->rating, 2) }} ({{ count($book->reviews)}} Reviews)</p>
+                                @else
+                                    <p class="ms-1 mb-0">-</p>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,8 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +24,9 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $books = Book::all();
+    $users = User::all();
+    return view('welcome', compact('books', 'users'));
 });
 
 Auth::routes();
