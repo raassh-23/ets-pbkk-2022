@@ -56,9 +56,9 @@
                     <h2>Categories</h2>
                     <ul class="list-group">
                         @foreach ($categories as $category)
-                            <li class="list-group-item">
-                                <a
-                                    href="{{ route('books.index', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                            <li class="list-group-item list-group-item-action">
+                                <a class="stretched-link text-black text-decoration-none" href="{{ route('books.index', ['category' => $category->id]) }}">{{ $category->name }}</a>
+                                <span class="badge rounded-pill bg-light text-dark float-end">{{ count($category->books) }} Books</span>
                             </li>
                         @endforeach
                     </ul>

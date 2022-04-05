@@ -46,7 +46,11 @@
                 <p id="contentWelcome"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam ea deleniti nemo ipsam dolor. 
                     Tenetur, aliquid optio maxime, ipsum id nostrum incidunt, iusto perspiciatis corporis 
                     facere qui culpa nesciunt adipisci?</p>
+<<<<<<< HEAD
                 <a href="{{ route('books.index') }}"><button class="btnChooseBooks">Choose Your Book</button></a>
+=======
+                <button class="btn text-light" style="background: #5e5343;">Choose Your Book</button>
+>>>>>>> 8172284cb130e3a70db37dc23d2b8b76a9343a61
             </span>
         </div>
 
