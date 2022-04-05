@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between">
             <h1>Manage Book</h1>
             <div>
-                <a href="{{ route('admin.writers.create') }}" class="btn btn-primary">Add Book</a>
+                <a href="{{ route('admin.books.create') }}" class="btn btn-primary">Add Book</a>
             </div>
         </div>
 

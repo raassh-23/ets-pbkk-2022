@@ -6,9 +6,9 @@
 
         <h2 class="mt-4">Most Reviewed</h2>
         @php
-            $most_reviewed_books = $books->toQuery()->withCount('reviews')->orderBy('reviews_count', 'desc')->take(5)->get();
+            $most_reviewed_books = $books->toQuery()->withCount('reviews')->orderBy('reviews_count', 'desc')->take(6)->get();
         @endphp
-        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-5 g-3">
+        <div class="row row-cols-2 row-cols-xs-2 row-cols-sm-4 row-cols-lg-6 g-3">
             @foreach ($most_reviewed_books as $book)
                 <div class="col position-relative">
                     <div class="card h-100">
@@ -42,9 +42,9 @@
 
         <h2 class="mt-4">Highest Rating</h2>
         @php
-            $highest_rating_books = $books->sortByDesc('rating')->take(5);
+            $highest_rating_books = $books->sortByDesc('rating')->take(6);
         @endphp
-        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-3 row-cols-lg-5 g-3">
+        <div class="row row-cols-2 row-cols-xs-2 row-cols-sm-4 row-cols-lg-6 g-3">
             @foreach ($highest_rating_books as $book)
                 <div class="col position-relative">
                     <div class="card h-100">
@@ -78,7 +78,7 @@
 
         <h2 class="mt-4">Top Users</h2>
         @php $top_users = $users->sortByDesc('reviews')->take(4); @endphp
-        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+        <div class="row row-cols-2 row-cols-xs-2 row-cols-sm-3 row-cols-lg-4 g-3">
             @foreach ($top_users as $user)
                 <div class="col position-relative">
                     <div class="card h-100">
