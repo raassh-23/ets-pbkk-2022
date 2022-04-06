@@ -84,19 +84,4 @@ class ReviewController extends Controller
             ]);
         }
     }
-
-    public function indexAdmin() 
-    {
-        $reviews = Review::all();
-
-        return view('admin.review.index', compact('reviews'));
-    }
-
-    public function destroyAdmin(Review $review)
-    {
-        $review->delete();
-        return redirect()->back()->with([
-            'success' => 'Review deleted successfully.',
-        ]);
-    }
 }

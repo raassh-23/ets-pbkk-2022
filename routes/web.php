@@ -9,6 +9,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\PublisherController as AdminPublisherController;
+use App\Http\Controllers\admin\ReviewController as AdminReviewController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -61,8 +62,6 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('categories', CategoryController::class)->except(['show']);
 
-        Route::get('/reviews', [ReviewController::class, 'indexAdmin'])->name('reviews.index');
-
-        Route::delete('/reviews/{review}', [ReviewController::class, 'destroyAdmin'])->name('reviews.destroy');
+        Route::resource('reviews', AdminReviewController::class)->only(['index', 'destroy']);
     });
 });
