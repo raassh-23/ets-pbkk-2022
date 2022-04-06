@@ -31,15 +31,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('books', BookController::class)->only(['index', 'show']);
+
+Route::resource('writers', WriterController::class)->only(['index', 'show']);
+
+Route::resource('publishers', PublisherController::class)->only(['index', 'show']);
+
+Route::resource('users', UserController::class)->only(['index', 'show']);
+
 Route::middleware('auth')->group(function () {
-    Route::resource('books', BookController::class)->only(['index', 'show']);
-
-    Route::resource('writers', WriterController::class)->only(['index', 'show']);
-
-    Route::resource('publishers', PublisherController::class)->only(['index', 'show']);
-
-    Route::resource('users', UserController::class)->only(['index', 'show']);
-
     Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
 
     Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function () {

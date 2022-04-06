@@ -23,8 +23,17 @@
                 <p class="mt-2">{{ $book->synopsis }}</p>
             </div>
         </div>
-        @php $user_review = Auth::user()->reviews->where('book_id', $book->id)->first() @endphp
-        <div class="container my-4 border border-2 rounded p-3">
+
+        @php 
+            $user_review = null;
+
+            if (Auth::check()) {
+                $user_review = $book->reviews->where('user_id', Auth::user()->id)->first();
+            }
+        @endphp
+        
+        @if (Auth::check())
+        <div class="container mt-4 border border-2 rounded p-3">
             @if ($user_review != NULL)
                 <div class="view-review">
                     <h4 class="fw-bold">Your review</h4>
@@ -138,6 +147,7 @@
                 </div>
             @endif
         </div>
+        @endif
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -161,10 +171,10 @@
             </div>
         @endif
 
-        <h2>Reviews ({{ count($book->reviews) }})</h2>
+        <h2 class="mt-4">Reviews ({{ count($book->reviews) }})</h2>
         @if (($book->reviews->count() > 1 && $user_review != NULL) || ($book->reviews->count() > 0 && $user_review == NULL ))
             @foreach ($book->reviews as $review)
-                @if ($review->user->id != Auth::user()->id)
+                @if (!Auth::check() || $review->user->id != Auth::user()->id)
                     <div class="card mb-3">
                         <div class="card-body">
                             <a class="fw-bold fs-4" href="{{ route('users.show', ['user' => $review->user->id]) }}">{{ $review->user->name }}</a>
