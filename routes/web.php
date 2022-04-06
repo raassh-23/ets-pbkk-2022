@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BookController as AdminBookController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PublisherController;
@@ -45,9 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-        Route::get('/books', [BookController::class, 'indexAdmin'])->name('books.index');
-
-        Route::resource('books', BookController::class)->except(['index', 'show']);
+        Route::resource('books', AdminBookController::class)->except(['show']);
 
         Route::get('/writers', [WriterController::class, 'indexAdmin'])->name('writers.index');
 
