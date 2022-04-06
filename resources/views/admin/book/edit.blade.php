@@ -83,7 +83,9 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update book</button>
+            </div>
         </form>
     </div>
 @endsection

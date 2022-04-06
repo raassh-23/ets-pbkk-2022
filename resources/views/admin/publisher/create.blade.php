@@ -33,7 +33,7 @@
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="col-12 form-group">
-                <label class="form-label" for="address">Adrress</label>
+                <label class="form-label" for="address">Address</label>
                 <input type="text" class="form-control" id="address" name="address" required>
             </div>
             <div class="col-6 form-group">
