@@ -26,14 +26,16 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.categories.update', ['category' => $category->id]) }}" method="POST" enctype="multipart/form-data">
+        <form class="row gy-3 p-3 border rounded-3 border-2 bg-white mt-3" action="{{ route('admin.categories.update', ['category' => $category->id]) }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="form-group">
-                <label for="name">Name</label>
+            <div class="col form-group m-0">
+                <label class="form-label" for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-12">
+                <button type="submit" class="form-button btn btn-primary">Edit category</button>
+            </div>
         </form>
     </div>
 @endsection

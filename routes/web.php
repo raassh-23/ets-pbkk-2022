@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -60,10 +60,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', [UserController::class, 'indexAdmin'])->name('users.index');
     
         Route::resource('users', UserController::class)->only(['update', 'destroy']);
-    
-        Route::get('/categories', [CategoryController::class, 'indexAdmin'])->name('categories.index');
 
-        Route::resource('categories', CategoryController::class)->except(['index', 'show']);
+        Route::resource('categories', CategoryController::class)->except(['show']);
 
         Route::get('/reviews', [ReviewController::class, 'indexAdmin'])->name('reviews.index');
 

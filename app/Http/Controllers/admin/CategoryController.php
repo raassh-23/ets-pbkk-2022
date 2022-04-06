@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -53,17 +56,6 @@ class CategoryController extends Controller
         return redirect()->back()->with([
             'error' => 'Category creation failed',
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
     }
 
     /**
@@ -114,12 +106,5 @@ class CategoryController extends Controller
         return redirect()->back()->with([
             'success' => 'Category deleted successfully.',
         ]);
-    }
-
-    public function indexAdmin() 
-    {
-        $categories = Category::all();
-
-        return view('admin.category.index', compact('categories'));
     }
 }
