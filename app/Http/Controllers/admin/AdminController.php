@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Writer;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {

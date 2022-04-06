@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\admin\BookController as AdminBookController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\WriterController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\BookController as AdminBookController;
 use App\Http\Controllers\admin\PublisherController as AdminPublisherController;
 use App\Http\Controllers\admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
 use App\Http\Controllers\admin\WriterController as AdminWriterController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -28,11 +29,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    $books = Book::all();
-    $users = User::all();
-    return view('welcome', compact('books', 'users'));
-});
+Route::get('/', [WelcomeController::class, 'welcome']);
 
 Auth::routes();
 
@@ -53,9 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('books', AdminBookController::class)->except(['show']);
 
         Route::resource('writers', AdminWriterController::class)->except(['show']);
-    
+
         Route::resource('publishers', AdminPublisherController::class)->except(['show']);
-    
+
         Route::resource('users', AdminUserController::class)->only(['index', 'update', 'destroy']);
 
         Route::resource('categories', CategoryController::class)->except(['show']);
