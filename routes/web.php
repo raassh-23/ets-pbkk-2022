@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\PublisherController as AdminPublisherController;
 use App\Http\Controllers\admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\admin\UserController as AdminUserController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -43,7 +44,7 @@ Route::resource('publishers', PublisherController::class)->only(['index', 'show'
 Route::resource('users', UserController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
-    Route::resource('books.reviews', ReviewController::class)->except(['index', 'create', 'show', 'edit']);
+    Route::resource('books.reviews', ReviewController::class)->only(['store', 'update', 'destroy']);
 
     Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
@@ -55,10 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('writers', WriterController::class)->except(['index', 'show']);
     
         Route::resource('publishers', AdminPublisherController::class)->except(['show']);
-
-        Route::get('/users', [UserController::class, 'indexAdmin'])->name('users.index');
     
-        Route::resource('users', UserController::class)->only(['update', 'destroy']);
+        Route::resource('users', AdminUserController::class)->only(['index', 'update', 'destroy']);
 
         Route::resource('categories', CategoryController::class)->except(['show']);
 
