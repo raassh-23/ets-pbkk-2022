@@ -26,7 +26,8 @@
             </div>
         @endif
 
-        <form class="row gy-3 p-3 border rounded-3 border-2 bg-white mt-3" action="{{ route('admin.writers.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="row gy-3 p-3 border rounded-3 border-2 bg-white mt-3" action="{{ route('admin.writers.store') }}"
+            method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="form-label" for="name">Name</label>

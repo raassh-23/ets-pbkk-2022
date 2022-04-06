@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\PublisherController as AdminPublisherController;
 use App\Http\Controllers\admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
+use App\Http\Controllers\admin\WriterController as AdminWriterController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -51,9 +52,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('books', AdminBookController::class)->except(['show']);
 
-        Route::get('/writers', [WriterController::class, 'indexAdmin'])->name('writers.index');
-
-        Route::resource('writers', WriterController::class)->except(['index', 'show']);
+        Route::resource('writers', AdminWriterController::class)->except(['show']);
     
         Route::resource('publishers', AdminPublisherController::class)->except(['show']);
     
